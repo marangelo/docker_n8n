@@ -6,6 +6,7 @@ volumes:
 
 services:
   postgres:
+    container_name: cn_n8n_postgres
     image: postgres:16
     restart: always
     environment:
@@ -24,6 +25,7 @@ services:
       retries: 10
 
   n8n:
+    container_name: cn_n8n
     image: docker.n8n.io/n8nio/n8n
     restart: always
     environment:
