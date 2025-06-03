@@ -73,3 +73,4 @@ Este proyecto está bajo la licencia [MIT](LICENSE).
 ---
 
 > Hecho con ❤️ por [@marangelo](https://github.com/marangelo)
+> Mi Blog https://blog.endscom.com/n8n-con-docker-compose/
