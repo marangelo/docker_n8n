@@ -40,6 +40,7 @@ services:
       - NON_ENCRYPTION_KEY = {{ ENCRYPTION_KEY}}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false
       - GENERIC_TIMEZONE=${TZ}
+      - WEBHOOK_URL=${WEBHOOK_URL}
       - TZ=${TZ}
     ports:
       - 5678:5678
