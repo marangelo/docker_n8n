@@ -5,10 +5,26 @@ volumes:
   n8n_storage:
 
 services:
+  stirling-pdf:
+    container_name: cn_n8n_stirling_pdf
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:0.46.2
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./StirlingPDF/trainingData:/usr/share/tessdata # Required for extra OCR languages
+      - ./StirlingPDF/extraConfigs:/configs
+      - ./StirlingPDF/customFiles:/customFiles/
+      - ./StirlingPDF/logs:/logs/
+      - ./StirlingPDF/pipeline:/pipeline/
+    environment:
+      - DISABLE_ADDITIONAL_FEATURES=false
+      - LANGS=en_GB
   postgres:
     container_name: cn_n8n_postgres
     image: postgres:16
     restart: always
+    ports:
+      - 5434:5432
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
@@ -27,7 +43,8 @@ services:
   n8n:
     container_name: cn_n8n
     image: docker.n8n.io/n8nio/n8n
-    #image: n8nio/n8n:1.95.3
+    #image: n8nio/n8n:1.97.1
+    #image: n8nio/n8n:1.101.2
     restart: always
     environment:
       - DB_TYPE=postgresdb
@@ -40,7 +57,13 @@ services:
       - NON_ENCRYPTION_KEY = {{ ENCRYPTION_KEY}}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false
       - GENERIC_TIMEZONE=${TZ}
-      - WEBHOOK_URL=${WEBHOOK_URL}
+      - WEBHOOK_URL=https://n8n.xxxx.com
+      #- WEBHOOK_TUNNEL_URL=https://n8n.xxxx.com
+      #- BASEROW_WEBHOOKS_ALLOW_PRIVATE_ADDRESS=true
+      #- N8N_SKIP_WEBHOOK_DEREGISTRATION_SHUTDOWN=true
+      #- N8N_DISABLE_PRODUCTION_MAIN_PROCESS=true
+      #- N8N_HOST=https://n8n.xxxx.com
+      #- N8N_PROTOCOL=https
       - TZ=${TZ}
     ports:
       - 5678:5678
