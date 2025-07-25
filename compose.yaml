@@ -19,6 +19,7 @@ services:
     environment:
       - DISABLE_ADDITIONAL_FEATURES=false
       - LANGS=en_GB
+
   postgres:
     container_name: cn_n8n_postgres
     image: postgres:16
@@ -74,3 +75,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+## Incorporar Evolution API
+## https://github.com/EvolutionAPI/evolution-api
